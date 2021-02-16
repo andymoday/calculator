@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Calculator</title>
+        <link href="main.css" rel="stylesheet"> 
+        <!--<link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"> 
+        -->
+    </head>
+
+    <body>
+        <div id="calculator">
+            <section id="display">
+                <div id="output-text"></div>
+            </section>
+            <section id='button-container'>
+                <div id="left-cols">
+                    <button class="button" id="clear">AC</button>
+                    <button class="button numeric" id="backspace">Del</button>
+                    <button class="button numeric" id="7">7</button>
+                    <button class="button numeric" id="8">8</button>
+                    <button class="button numeric" id="9">9</button>
+                    <button class="button numeric" id="4">4</button>
+                    <button class="button numeric" id="5">5</button>
+                    <button class="button numeric" id="6">6</button>
+                    <button class="button numeric" id="1">1</button>
+                    <button class="button numeric" id="2">2</button>
+                    <button class="button numeric" id="3">3</button>
+                    <button class="button numeric" id="0">0</button>
+                    <button class="button numeric" id=".">.</button>
+                    <button class="button" id="=">=</button>
+                </div>
+                <div id="right-cols">
+                <button class="button operator" id="divide">&#247;</button>
+                <button class="button operator" id="multiply">x</button>
+                <button class="button operator" id="subtract">-</button>
+                <button class="button operator" id="add">+</button>
+                </div>
+            </section>
+        </div>
+    </body>
+
+    <script>  
+        //=============ADDITION. SUBTRACTION, MULTIPLICATION, DIVIDE OPERATIONS===============   
+        function add(num1, num2) {
+            return num1 + num2;
+        }
+        function subtract(num1, num2) {
+            return num1 - num2;
+        }
+        function multiply(num1,num2) {
+            return num1 * num2;
+        }
+        function divide(num1,num2) {
+            return (num2 ===0) ? 'No can do!' : num1 / num2; 
+        }
+        //=============OPERATOR FUNCTION==========================
+        function operate(func, num1 , num2) {
+            return +(func(num1,num2).toFixed(11));
+        }
+        let num1 = null
+        let num2 = null
+        let operator = null
+        let result = null
+        const displayOutput = document.getElementById("output-text");
+        const buttons = document.querySelectorAll("button");
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                if (button.id === 'clear') {
+                    displayOutput.textContent = ''; 
+                    num1 = null;
+                    num2 = null;
+                    operator = null;
+                    result = null;
+                }
+                if (button.classList.contains('numeric')) {
+                    //console.log(num1,num2,operator,result)
+                    if (result !== null) {
+                        displayOutput.textContent = '';
+                        num1 = result;
+                        num2 = null;
+                        result = null
+                    }
+                    if (operator === null) {
+                        if (button.id === "backspace") {
+                            displayOutput.textContent = displayOutput.textContent.slice(0,-1);
+                        } else if (button.id === '.' && displayOutput.textContent.indexOf('.') >= 0) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else if (displayOutput.textContent.length >= 12) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else {
+                            displayOutput.textContent = displayOutput.textContent + button.id;
+                        }
+                        num1 = parseFloat(displayOutput.textContent);
+                        num2 = null;
+                        result = null;
+                    } else {
+                        if (button.id === "backspace") {
+                            displayOutput.textContent = displayOutput.textContent.slice(0,-1);
+                        } else if (button.id === '.' && displayOutput.textContent.indexOf('.') >= 0) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else if (displayOutput.textContent.length >= 12) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else {
+                            displayOutput.textContent = displayOutput.textContent + button.id;
+                        }
+                        num2 = parseFloat(displayOutput.textContent);
+                        result = null;
+                    }
+                }
+                if (button.classList.contains('operator')) {
+                    displayOutput.textContent = '.';
+                    displayOutput.textContent = '';
+                    //console.log(num1,num2,operator,result)
+                    if (result === null && num2 === null) {
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                    } else
+                    if (result === null && num2 !== null) {
+                        result = operate(operator, num1, num2);
+                        num1 = result;
+                        num2 = null;
+                        displayOutput.textContent = result;
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                    } else if (result !== null) {
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                        num1 = result;
+                        num2 = null;
+                        result = null;
+                    }
+                }
+                if (button.id === '=') {
+                    //console.log(num1,num2,operator,result)
+                    displayOutput.textContent = '';
+                    if (num1 !== null && num2 !== null) {
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                        result = operate(operator, num1, num2);
+                        num1 = null;
+                        num2 = null;
+                        operator = null;
+                        displayOutput.textContent = result;
+                    }  else if (num1 !== null && num2 === null){
+                        result = num1;
+                        num1 = null;
+                        num2 = null;
+                        operator = null;
+                        displayOutput.textContent = result;
+                    }  else if (result !== null && num1 === null){
+                        num1 = null;
+                        num2 = null;
+                        operator = null;
+                        displayOutput.textContent = result;
+                    }
+                }
+            });
+        });
+        //const buttons = document.querySelectorAll("button");
+        buttons.forEach((button) => {
+            window.addEventListener('keydown', (e) => {
+                e.preventDefault();
+                let keyPress; 
+                switch(e.keyCode) {
+                    case 107:
+                    case (e.shiftKey && 61):
+                        keyPress = 'add'
+                        break;
+                    case 109:
+                    case 173:
+                        keyPress = 'subtract'
+                        break;
+                    case 106:
+                    case (e.shiftKey && 56):    
+                        keyPress = 'multiply'
+                        break;
+                    case 111:
+                    case 191:
+                        keyPress = 'divide'
+                        break;
+                    case 8:
+                        keyPress = 'backspace'
+                        break;
+                    case 110:
+                    case 190:
+                        keyPress = '.'
+                        break;
+                    case 61:
+                    case 13:
+                        keyPress = '='
+                        break;
+                    case 96:
+                    case 48:
+                        keyPress = '0'
+                        break;
+                    case 97:
+                    case 49:
+                        keyPress = '1'
+                        break;
+                    case 98:
+                    case 50:
+                        keyPress = '2'
+                        break;
+                    case 99:
+                    case 51:
+                        keyPress = '3'
+                        break;
+                    case 100:
+                    case 52:
+                        keyPress = '4'
+                        break;
+                    case 101:
+                    case 53:
+                        keyPress = '5'
+                        break;
+                    case 102:
+                    case 54:
+                        keyPress = '6'
+                        break;
+                    case 103:
+                    case 55:
+                        keyPress = '7'
+                        break;
+                    case 104:
+                    case 56:
+                        keyPress = '8'
+                        break;
+                    case 105:
+                    case 57:
+                        keyPress = '9'
+                        break;
+                    case 67:
+                        keyPress = 'clear'
+                        break;
+                    }         
+                if (keyPress !== button.id) {
+                    displayOutput.textContent = displayOutput.textContent;   
+                } else {
+                if (button.id === 'clear') {
+                    displayOutput.textContent = ''; 
+                    num1 = null;
+                    num2 = null;
+                    operator = null;
+                    result = null;
+                }
+                if (button.classList.contains('numeric')) {
+                    //console.log(num1,num2,operator,result)
+                    if (result !== null) {
+                        displayOutput.textContent = '';
+                        num1 = result;
+                        num2 = null;
+                        result = null
+                    }
+                    if (operator === null) {
+                        if (button.id === "backspace") {
+                            displayOutput.textContent = displayOutput.textContent.slice(0,-1);
+                        } else if (button.id === '.' && displayOutput.textContent.indexOf('.') >= 0) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else if (displayOutput.textContent.length >= 12) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else {
+                            displayOutput.textContent = displayOutput.textContent + button.id;
+                        }
+                        num1 = parseFloat(displayOutput.textContent);
+                        num2 = null;
+                        result = null;
+                    } else {
+                        if (button.id === "backspace") {
+                            displayOutput.textContent = displayOutput.textContent.slice(0,-1);
+                        } else if (button.id === '.' && displayOutput.textContent.indexOf('.') >= 0) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else if (displayOutput.textContent.length >= 12) {
+                            displayOutput.textContent = displayOutput.textContent
+                        } else {
+                            displayOutput.textContent = displayOutput.textContent + button.id;
+                        }
+                        num2 = parseFloat(displayOutput.textContent);
+                        result = null;
+                    }
+                }
+                if (button.classList.contains('operator')) {
+                    displayOutput.textContent = '';
+                    //console.log(num1,num2,operator,result)
+                    if (result === null && num2 === null) {
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                    } else
+                    if (result === null && num2 !== null) {
+                        result = operate(operator, num1, num2);
+                        num1 = result;
+                        num2 = null;
+                        displayOutput.textContent = result;
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                    } else if (result !== null) {
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                        num1 = result;
+                        num2 = null;
+                        result = null;
+                    }
+                }
+                if (button.id === '=') {
+                    //console.log(num1,num2,operator,result)
+                    displayOutput.textContent = '';
+                    if (num1 !== null && num2 !== null) {
+                        switch(button.id) {
+                            case 'add':
+                                operator = add
+                                break;
+                            case 'subtract':
+                                operator = subtract
+                                break;
+                            case 'multiply':
+                                operator = multiply
+                                break;
+                            case 'divide':
+                                operator = divide
+                                break;
+                            } 
+                        result = operate(operator, num1, num2);
+                        num1 = null;
+                        num2 = null;
+                        operator = null;
+                        displayOutput.textContent = result;
+                    }  else if (num1 !== null && num2 === null){
+                        result = num1;
+                        num1 = null;
+                        num2 = null;
+                        operator = null;
+                        displayOutput.textContent = result;
+                    }  else if (result !== null && num1 === null){
+                        num1 = null;
+                        num2 = null;
+                        operator = null;
+                        displayOutput.textContent = result;
+                    }
+                }}
+            });
+        });
+    </script>
+</html>
+
+
