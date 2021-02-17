@@ -1,92 +1,145 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*===================================END OF RESET=============================================*/
+
 @font-face {
     font-family: 'calc';
     src: url('digital-7-webfont.woff');
 }
 #calculator {
-    margin: 0 auto;
-    width: 460px;
-    height: 560px;
+    background-color: rgba(190, 189, 184, 0.37);
     border: 1px solid grey;
     border-radius: 5%;
     box-shadow: 0px 0px 13px 4px #3b3514;
+    margin: 10px auto;
+    height: 560px;
+    width: 460px;   
 }
-#display {
-    margin: 15px auto 0 auto;
-    display: flex;
+/*==========DISPLAY SECTION===============*/
+#display {   
     align-items: center;
-    justify-content: flex-end;
-    height: 17%;
-    width: 93%;
-    border-style: solid;
-    border-color: rgba(53, 51, 51, 0.418);
-    border-radius: 5px;
-    border-width: 1px;
-    box-shadow: inset 0 0 10px #000000 ;
     background-color: rgba(94, 190, 115, 0.562);
-    
+    border: 1px solid rgba(53, 51, 51, 0.418);
+    border-radius: 5px;
+    box-shadow: inset 0 0 10px #000000 ;
+    display: flex;
+    height: 17%;
+    justify-content: flex-end;
+    margin: 15px auto 0 auto;
+    width: 93%;   
 }
 #output-text {
-    margin: 0 10px;
+    color:rgba(35, 59, 41, 0.418); 
     font-family: 'calc';
-    font-size: 80px;
-    color:rgba(35, 59, 41, 0.418)
-    
+    font-size: 72px;
+    margin: 0 10px;
 }
-
+/*===========BUTTON SECTION==================*/
 #button-container {
     display: flex;
-    margin: 30px auto 10px auto;
-    width: 95%;
-    height: 55%;
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
+    height: 70%;
+    margin: 30px auto 10px auto;
+    width: 95%;  
 }
 #left-cols {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
     flex-direction: row;
-    width: 60%;
-    height:100%;
+    flex-wrap: wrap;
+    height: 93%;
+    justify-content: flex-start;
+    width: 70%;
 }
 #right-cols {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: right;
-    width: 15%;
+    flex-direction: row;
     height: 100%;
+    justify-content: center;
+    width: 30%;
 }
 .button {
-    width: 25%;
+    background-color:rgba(4, 39, 78, 0.76);
+    border: 0px solid rgba(4, 39, 78, 0.164);
+    border-radius: 30%;
+    box-shadow: 0px 0px 5px 2px #807d77;
+    color: white;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 35px;
     height: 20%;
     margin: 1.5%;
-    border-radius: 25%;
-    font-size: 25px;
-    box-shadow: 0px 0px 5px 4px #807d77;
-    border: 1px solid rgba(49, 49, 42, 0.712);
-    background-color:rgba(4, 39, 78, 0.829);
-    color: white;
+    transition: all .07s ease;
+    width: 30%;
 }
 
 #right-cols .button {
-    width: 100%;
-    height: 25%;
-    margin: 1.5%;
-    border-radius: 25%;
-    font-size: 25px;
-    box-shadow: 0px 0px 5px 4px #807d77;
-    border: 1px solid rgba(49, 49, 42, 0.712);
-    background-color:rgba(4, 39, 78, 0.829);
-    color: white;
+    background-color:rgba(67, 70, 75, 0.829);
+    border: 0px solid rgba(67, 70, 75, 0.164);
+    font-size: 35px;
+    height: 24%;
+    margin: 3% 0;
+    width: 80%;
 }
 #clear {
     background-color: rgba(241, 60, 28, 0.76);
-    width: 47%;
-    border-radius: 6%;
-    
+    border: 0px solid rgba(241, 60, 28, 0.164);
+    border-radius: 6%; 
+    width: 63%;  
 }
-#add {
-    height: 47%;
-    border-radius: 6%;
+.pressed {
+    border: 1px solid rgba(49, 49, 42, 0.712);
+    box-shadow: 0px 0px ;
+    transform: scale(1.05)
+}
+.button:hover {
+    border: 1px solid rgba(49, 49, 42, 0.712);
+    transform: scale(1.05);
+    box-shadow: 0px 0px ;
 }
